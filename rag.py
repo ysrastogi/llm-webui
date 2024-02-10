@@ -15,13 +15,12 @@ class ChatPDF:
     retriever = None
     chain = None
 
-    def __init__(self, model):
+    def __init__(self, model, prompt):
         self.model = ChatOllama(model=model)
         self.text_splitter = RecursiveCharacterTextSplitter(chunk_size=1024, chunk_overlap=100)
         self.prompt = PromptTemplate.from_template(
             """
-            <s> [INST] You are an intelligent support engineer. You are provided with the following document and user will ask some questions from you.
-            You have to answer stritcly using the context provided. Think step by step before answering for an accurate solution.
+            <s> [INST] {prompt}
             . [/INST] </s> 
             [INST] Question: {question} 
             Context: {context} 
